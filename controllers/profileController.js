@@ -31,26 +31,25 @@ const changePassword = async (req, res) => {
       return res.status(200).json({ message: "Missing required fields" });
     }
     
-    // Find user
+   
     const user = await User.findOne({ username: req.user.username });
     
     if (!user) {
       return res.status(200).json({ message: "User not found" });
     }
     
-    // Check old password
     const isOldPasswordCorrect = await user.correctPassword(oldPassword, user.password);
     
     if (!isOldPasswordCorrect) {
       return res.status(200).json({ message: "Old password is incorrect" });
     }
     
-    // Check if new passwords match
+   
     if (newPassword !== confirmPassword) {
       return res.status(200).json({ message: "Passwords do not match" });
     }
     
-    // Update password
+    
     user.password = newPassword;
     await user.save();
     
@@ -64,7 +63,7 @@ const changeName = async (req, res) => {
   try {
     const { firstName, lastName } = req.body;
     
-    // Update user
+   
     const user = await User.findOneAndUpdate(
       { username: req.user.username },
       { firstName, lastName },

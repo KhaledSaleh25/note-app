@@ -33,7 +33,7 @@ const createNote = async (req, res) => {
   try {
     const { title, content, categoryName } = req.body;
     
-    // If category is provided, validate it belongs to the user
+ 
     if (categoryName) {
       const category = await Category.findOne({
         name: categoryName,
@@ -45,7 +45,7 @@ const createNote = async (req, res) => {
       }
     }
     
-    // Create new note
+    
     const note = new Note({
       title,
       content,
@@ -66,7 +66,7 @@ const updateNote = async (req, res) => {
     const { id } = req.params;
     const { title, content, categoryName } = req.body;
     
-    // If category is provided, validate it belongs to the user
+ 
     if (categoryName) {
       const category = await Category.findOne({
         name: categoryName,
@@ -78,7 +78,7 @@ const updateNote = async (req, res) => {
       }
     }
     
-    // Find and update note
+  
     const note = await Note.findOneAndUpdate(
       { _id: id, ownerUsername: req.user.username },
       { title, content, categoryName: categoryName || "Uncategorized" },
@@ -100,12 +100,12 @@ const partialUpdateNote = async (req, res) => {
     const { id } = req.params;
     const { title, content, categoryName } = req.body;
     
-    // Build update object with only provided fields
+
     const updateFields = {};
     if (title) updateFields.title = title;
     if (content) updateFields.content = content;
     
-    // If category is provided, validate it belongs to the user
+
     if (categoryName) {
       const category = await Category.findOne({
         name: categoryName,
@@ -119,7 +119,7 @@ const partialUpdateNote = async (req, res) => {
       updateFields.categoryName = categoryName;
     }
     
-    // Find and update note
+   
     const note = await Note.findOneAndUpdate(
       { _id: id, ownerUsername: req.user.username },
       updateFields,

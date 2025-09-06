@@ -4,7 +4,7 @@ const Category = require('../models/Category');
 const Note = require('../models/Note');
 const auth = require('../middleware/auth');
 
-// Homepage route - get user's categories and notes
+
 router.get('/', auth, async (req, res) => {
   try {
     const categories = await Category.find({ ownerUsername: req.user.username });

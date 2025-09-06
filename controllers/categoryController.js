@@ -14,7 +14,6 @@ const createCategory = async (req, res) => {
   try {
     const { name } = req.body;
     
-    // Check if category already exists for this user
     const existingCategory = await Category.findOne({
       name,
       ownerUsername: req.user.username
@@ -24,7 +23,7 @@ const createCategory = async (req, res) => {
       return res.status(400).json({ message: "Category already exists" });
     }
     
-    // Create new category
+
     const category = new Category({
       name,
       ownerUsername: req.user.username
@@ -42,7 +41,7 @@ const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Find category
+    
     const category = await Category.findOne({
       _id: id,
       ownerUsername: req.user.username
@@ -52,7 +51,7 @@ const deleteCategory = async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     }
     
-    // Check if category is used by any notes
+  
     const notesWithCategory = await Note.findOne({
       categoryName: category.name,
       ownerUsername: req.user.username
@@ -62,7 +61,7 @@ const deleteCategory = async (req, res) => {
       return res.status(400).json({ message: "Category in use by notes" });
     }
     
-    // Delete category
+    
     await Category.deleteOne({ _id: id });
     
     res.status(200).json({ ok: true });

@@ -18,7 +18,7 @@ const sessionSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true,
-  expires: 3600 // 1 hour in seconds
+  expires: 3600 
 });
 
 module.exports = mongoose.model('Session', sessionSchema);
